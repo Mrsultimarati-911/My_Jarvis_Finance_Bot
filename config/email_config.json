@@ -1,0 +1,7 @@
+{
+  "smtp_server": "smtp.163.com",
+  "smtp_port": 465,
+  "sender_email": "my_jarvis_911@163.com",
+  "sender_password": "BYuvZ3AnpcMyGnt9",
+  "receiver_email": "727229250@qq.com"
+}

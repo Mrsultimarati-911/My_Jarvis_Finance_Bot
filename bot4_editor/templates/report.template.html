@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { margin: 0; padding: 0; font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background-color: #f2f3f5; color: #333; }
+        .container { max-width: 700px; margin: 20px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%); padding: 30px 20px; text-align: center; color: white; }
+        .header h1 { margin: 0; font-size: 26px; letter-spacing: 2px; }
+        .header .date { font-size: 14px; opacity: 0.9; margin-top: 8px; }
+        .section { padding: 25px; border-bottom: 1px dashed #eee; }
+        .section:last-child { border-bottom: none; }
+        .section-title { font-size: 18px; font-weight: bold; color: #2c3e50; border-left: 5px solid #e74c3c; padding-left: 12px; margin-bottom: 15px; display: flex; align-items: center; }
+        .badge { background: #e74c3c; color: white; font-size: 12px; padding: 2px 6px; border-radius: 4px; margin-left: 10px; font-weight: normal; }
+        .data-list { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 14px; }
+        .data-list th { text-align: left; background: #f8f9fa; padding: 8px; color: #7f8c8d; font-weight: normal; border-bottom: 2px solid #e74c3c; }
+        .data-list td { padding: 10px 8px; border-bottom: 1px solid #eee; }
+        .rank-num { font-weight: bold; color: #e74c3c; width: 20px; display: inline-block; }
+        .stock-code { color: #999; font-family: monospace; font-size: 12px; margin-left: 5px; }
+        .ai-box { background-color: #fdf2f1; border: 1px solid #fadbd8; border-radius: 6px; padding: 15px; position: relative; margin-top: 15px; }
+        .ai-title { font-size: 13px; font-weight: bold; color: #c0392b; margin-bottom: 8px; text-transform: uppercase; }
+        .ai-content { font-size: 14px; line-height: 1.6; color: #444; text-align: justify; }
+        .footer { background: #2c3e50; color: #95a5a6; text-align: center; padding: 15px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 金融情报快报</h1>
+            <div class="date">{{ date_str }}</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">板块一：热点信息收集 <span class="badge">Bot 1</span></div>
+            <table class="data-list">
+                <thead><tr><th width="20%">关键词</th><th width="15%">频数</th><th>最新动态摘要</th></tr></thead>
+                <tbody>
+                    {% for item in bot1_data %}
+                    <tr>
+                        <td style="font-weight:bold; color:#333;">{{ item.target }}</td>
+                        <td style="text-align:center;">{{ item.frequency }}</td>
+                        <td style="color:#666; font-size:12px;">{{ item.latest_content }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="ai-box">
+                <div class="ai-title">🤖 DeepSeek 宏观研判</div>
+                <div class="ai-content">{{ ai_analysis_part1 | replace('\n', '<br>') | safe }}</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">板块二：A股热点股 TOP10 <span class="badge">Bot 2</span></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                {% for stock in bot2_data %}
+                <div style="background:#fff; border:1px solid #eee; padding:8px; border-radius:4px; font-size:14px; width: 45%;">
+                    <span class="rank-num">{{ loop.index }}</span>
+                    <strong>{{ stock.name }}</strong>
+                    <span class="stock-code">{{ stock.code }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="ai-box">
+                <div class="ai-title">🏭 行业与主线分析</div>
+                <div class="ai-content">{{ ai_analysis_part2 | replace('\n', '<br>') | safe }}</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">板块三：热门股情绪方向 <span class="badge">Bot 3</span></div>
+            {% for stock in bot3_data %}
+            <div style="margin-bottom: 15px; border-bottom:1px solid #f0f0f0; padding-bottom:10px;">
+                <div style="font-weight:bold; color:#2980b9; margin-bottom:5px;">
+                    🔥 No.{{ loop.index }} {{ stock.name }} ({{ stock.code }})
+                </div>
+                <div style="font-size:12px; color:#7f8c8d; background:#f9f9f9; padding:8px; border-left:3px solid #ccc; line-height:1.5;">
+                    {% for title in stock.titles %}
+                    • {{ title }}<br>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="ai-box">
+                <div class="ai-title">⚖️ 市场多空情绪</div>
+                <div class="ai-content">{{ ai_analysis_part3 | replace('\n', '<br>') | safe }}</div>
+            </div>
+        </div>
+
+        <div class="footer">Generated by Python Auto-Finance System • Powered by DeepSeek</div>
+    </div>
+</body>
+</html>
