@@ -1,4 +1,4 @@
-# My_Jarvis_Finance_Bot——基于DeepSeek的A股自动化舆情分析监控系统
+# My_Jarvis_Finance_Bot——基于LLM的A股自动化舆情分析监控系统
 
 ## 项目简介
 本项目是一个 7x24 小时全自动运行的多智能体（Multi-Agent）金融监控系统。系统通过分布式爬虫实时捕获全球宏观快讯、A 股资金热榜及个股微观散户舆情，并利用 DeepSeek 大语言模型 (LLM) 进行深度文本解析与多空情绪量化研判，最终生成可视化 HTML 早报。
