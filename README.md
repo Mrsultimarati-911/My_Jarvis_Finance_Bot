@@ -33,4 +33,5 @@
 
 ## 成果展示
 生成的研报会通过邮件推送，包含AI提炼的宏观摘要、资金榜单，以及直观的个股多空红绿卡片。
+邮件实例如下：
 ![ffbff3757e85479aa45a0acb8b9a85e4](https://github.com/user-attachments/assets/07e94fd1-6a70-435d-b736-7529e5d11e5f)
