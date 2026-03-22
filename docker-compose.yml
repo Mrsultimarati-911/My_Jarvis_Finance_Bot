@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # 1. 宏观快讯监控机器人
+  bot1_macro_monitor:
+    build: ./bot1_news_monitor  # 告诉 Compose 去这个文件夹里找 Dockerfile 建造镜像
+    container_name: bot1_container
+    restart: unless-stopped     # 崩溃或重启服务器时自动拉起
+    environment:
+      - TZ=Asia/Shanghai        # 统一时区
+    volumes:
+      - ./shared_data:/app/data # 挂载数据大仓库
+      - ./config:/app/config    # 挂载配置文件夹（为了读 detection_target.txt）
+
+  # 2. A股资金热榜机器人
+  bot2_hot_rank:
+    build: ./bot2_hot_rank
+    container_name: bot2_container
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./shared_data:/app/data
+
+  # 3. 新浪股吧情绪挖掘机器人
+  bot3_sentiment_miner:
+    build: ./bot3_sentiment_miner
+    container_name: bot3_container
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./shared_data:/app/data
+
+  # 4. AI 分析师与邮件分发机器人
+  bot4_ai_analyst:
+    build: ./bot4_ai_analyst
+    container_name: bot4_container
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./shared_data:/app/data
+      - ./config:/app/config    # 必须挂载，为了读取 API Key 和邮箱密码
